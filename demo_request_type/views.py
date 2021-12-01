@@ -11,13 +11,20 @@ class CustomRequest(HttpRequest):
 
 
 class RequestTypeMixin:
-    # This mixin would contain other functionality, but
-    # the request annotation is the issue I need to get past
-    # so for the mvp, that's all I'm putting here
+    if TYPE_CHECKING:
+        request: CustomRequest
+    ...
 
+
+class OptionA(View, RequestTypeMixin):
     if TYPE_CHECKING:
         request: CustomRequest
 
 
-class CostModelExperienceFeedback(RequestTypeMixin, View):
-    ...
+class TypedView(View):
+    if TYPE_CHECKING:
+        request: CustomRequest
+
+
+class OptionB(TypedView):
+    pass
